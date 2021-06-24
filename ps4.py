@@ -213,6 +213,9 @@ evaluate_models_on_training(x, y, models)
 x1 = INTERVAL_1
 x2 = INTERVAL_2
 y = []
-# MISSING LINES
-models = generate_models(x, y, [1])    
-evaluate_models_on_training(x, y, models)
+for year in INTERVAL_1:
+    #Queremos la temperatura media del año, no la temperatura de un único día
+    #☺Por lo tanto, usamos el def que nos proporciona las temperaturas a lo largo del año
+    y.append(np.mean(raw_data.get_yearly_temp('BOSTON', year)))
+models = generate_models(x1, y, [1])    
+evaluate_models_on_training(x1, y, models)
