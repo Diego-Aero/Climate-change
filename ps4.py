@@ -145,8 +145,12 @@ def r_squared(y, estimated):
     Returns:
         a float for the R-squared error term
     """
-    # TODO
-    pass
+    #R^2=1-(sum(y[i]-e[i])^2)/(sum(y[i]-mean)^2) donde y son los datos del dataset, e son las estimaciones del modelo de regresión y mean es la media de los y
+    error=0.0
+    for i in range(len(y)):
+        error+=(estimated[i]-y[i])**2
+    meanError=error/len(y)
+    return 1-(meanError/np.var(y))
 
 # Problem 3
 def evaluate_models_on_training(x, y, models):
