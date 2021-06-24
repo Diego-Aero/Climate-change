@@ -174,8 +174,23 @@ def evaluate_models_on_training(x, y, models):
     Returns:
         None
     """
-    # TODO
-    pass
+    deg=1
+    best=0.0
+    for model in models:
+        estY=np.polyval(model, x)
+        rSquare=r_squared(y, estY)
+        print('R-squared for', deg, 'degree =', rSquare)
+        deg+=1
+        if rSquare>=best:
+            winModel=model
+    pylab.figure()
+    pylab.plot(x, y, 'bo', label='Data Points')
+    fitY=np.polyval(winModel, x)
+    pylab.plot(x, fitY, 'r', label='Predictive Values')
+    pylab.xlabel('Year')
+    pylab.ylabel('Mean Daily High (C)')
+    pylab.title('Temperature Evolution')
+    pylab.legend(loc='best')
 
 
 ### Begining of program
@@ -184,9 +199,13 @@ raw_data = Climate('data.csv')
 # Problem 3
 y = []
 x = INTERVAL_1
+#Años entre 1961 y 2016
 for year in INTERVAL_1:
+    #Elegimos una ciudad y una fecha cualquiera del año, por ejemplo 10 de enero, para ver si somos capaces de obtener una tendencia
+    #Debido al calentamiento global, la temperatura en esta fecha específica debería ir aumentando
     y.append(raw_data.get_daily_temp('BOSTON', 1, 10, year))
 models = generate_models(x, y, [1])
+#models es el a, b y c del polinomio y=a*x**2+b*x+c en tuple (a, b, c)
 evaluate_models_on_training(x, y, models)
 
 
